@@ -8,6 +8,7 @@ resource "google_kms_crypto_key_iam_member" "gcs_default_sa" {
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
 
   member = "serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}"
+  depends_on = [google_project_service.services]
 }
 
 resource "google_storage_bucket" "bucket" {
@@ -23,5 +24,5 @@ resource "google_storage_bucket" "bucket" {
 
   # Ensure the KMS crypto-key IAM binding for the service account exists prior to the
   # bucket attempting to utilise the crypto-key.
-  depends_on = [google_kms_crypto_key_iam_member.gcs_default_sa]
+  depends_on = [google_kms_crypto_key_iam_member.gcs_default_sa, google_project_service.services]
 }
