@@ -5,7 +5,6 @@ module "project-services" {
   version = "~> 12.0"
 
   project_id  = var.project_id
-  enable_apis = var.enable_apis
 
   activate_apis = [
     "cloudresourcemanager.googleapis.com",
