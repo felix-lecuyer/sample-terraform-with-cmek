@@ -1,5 +1,6 @@
 data "google_storage_project_service_account" "gcs_account" {
   project = var.project_id
+  depends_on = [module.project-services]
 }
 
 # The gcs default storage account must be given access to the KMS Key.
