@@ -6,7 +6,7 @@ resource "google_service_account" "gke_service_account" {
   account_id   = "sample-gke-sa"
   project      = var.project_id
   display_name = "Service Account"
-  depends_on = [google_project_service.services]
+  depends_on = [module.project-services]
 }
 
 # We need to provide access to the KMS Key to the previously created service account, but also to the default service accounts.
@@ -15,21 +15,21 @@ resource "google_kms_crypto_key_iam_member" "gke_sa" {
   crypto_key_id = var.kms_key_path
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   member        = "serviceAccount:${google_service_account.gke_service_account.email}"
-  depends_on = [google_project_service.services]
+  depends_on = [module.project-services]
 }
 
 resource "google_kms_crypto_key_iam_member" "compute_engine_sa" {
   crypto_key_id = var.kms_key_path
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   member        = "serviceAccount:service-${data.google_project.project.number}@compute-system.iam.gserviceaccount.com"
-  depends_on = [google_project_service.services]
+  depends_on = [module.project-services]
 }
 
 resource "google_kms_crypto_key_iam_member" "container_sa" {
   crypto_key_id = var.kms_key_path
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   member        = "serviceAccount:service-${data.google_project.project.number}@container-engine-robot.iam.gserviceaccount.com"
-  depends_on = [google_project_service.services]
+  depends_on = [module.project-services]
 }
 
 # Creating a sample VPC for the kubernetes cluster
