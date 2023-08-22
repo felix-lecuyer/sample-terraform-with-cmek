@@ -1,7 +1,13 @@
 # Enable required APIs
 
-resource "google_project_service" "services" {
-  for_each = toset([
+module "project-services" {
+  source  = "terraform-google-modules/project-factory/google//modules/project_services"
+  version = "~> 12.0"
+
+  project_id  = var.project_id
+  enable_apis = var.enable_apis
+
+  activate_apis = [
     "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
     "container.googleapis.com",
@@ -9,8 +15,6 @@ resource "google_project_service" "services" {
     "artifactregistry.googleapis.com",
     "dns.googleapis.com",
    "cloudkms.googleapis.com",
-  ])
-  project = var.project_id
-  service = each.value
+  ]
   disable_services_on_destroy = false
 }
