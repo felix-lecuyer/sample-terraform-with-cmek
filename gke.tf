@@ -67,6 +67,7 @@ module "gcp_network" {
       },
     ]
   }
+  depends_on = [module.project-services]
 }
 
 locals {
