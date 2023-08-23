@@ -1,5 +1,6 @@
 variable "name" {
-  type = string
+  type        = string
+  description = "Name of the VPC"
 }
 
 variable "subnetworks" {
@@ -12,4 +13,10 @@ variable "subnetworks" {
       ip_cidr_range = string
     }))
   }))
+  description = "List of the subnetworks of the VPC"
+}
+
+variable "project_id" {
+  type        = string
+  description = "Project id where to deploy the network"
 }

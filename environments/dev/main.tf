@@ -28,16 +28,16 @@ module "network" {
 module "cluster" {
   source = "../../modules/gke"
 
-  name                   = "cluster-dev"
-  project_id                = var.project_id
-  region                 = var.region
-  network_id             = module.network.id
-  subnetwork_id          = module.network.subnetworks["network-dev-main-${var.region}"].id
+  name          = "cluster-dev"
+  project_id    = var.project_id
+  region        = var.region
+  network_id    = module.network.id
+  subnetwork_id = module.network.subnetworks["network-dev-main-${var.region}"].id
 
   cluster_secondary_range_name  = local.cluster_secondary_range_name
   services_secondary_range_name = local.services_secondary_range_name
 
-    kms_key_path = var.kms_key_path
+  kms_key_path = var.kms_key_path
 
   depends_on = [module.network]
 }

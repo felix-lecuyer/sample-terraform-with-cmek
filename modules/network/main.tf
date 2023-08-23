@@ -26,7 +26,6 @@ locals {
 
 # Let's create the specified subnetworks
 resource "google_compute_subnetwork" "subnetworks" {
-  #checkov:skip=CKV_GCP_26:We do not use VPC Flow Logs in this demo
   for_each = local.subnets_map
   name     = each.key
   network  = google_compute_network.network.id
