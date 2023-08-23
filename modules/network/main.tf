@@ -17,6 +17,8 @@ resource "google_compute_network" "network" {
   name                    = var.name
   auto_create_subnetworks = false
   project = var.project_id
+
+  depends_on = [module.project-services]
 }
 
 locals {
