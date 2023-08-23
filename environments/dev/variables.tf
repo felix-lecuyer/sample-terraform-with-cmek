@@ -1,5 +1,5 @@
 variable "project_id" {
-  description = "Id of the project where to deploy the GKE cluster"
+  description = "Id of the project where to deploy the resources"
   type        = string
 }
 
@@ -10,6 +10,6 @@ variable "region" {
 }
 
 variable "kms_key_path" {
-  description = "The Customer Managed Encryption Key used to encrypt the boot disks of the node autoprovisioned by the cluster. This should be of the form projects/[KEY_PROJECT_ID]/locations/[LOCATION]/keyRings/[RING_NAME]/cryptoKeys/[KEY_NAME]"
+  description = "The Customer Managed Encryption Key used to encrypt the data. This should be of the form projects/[KEY_PROJECT_ID]/locations/[LOCATION]/keyRings/[RING_NAME]/cryptoKeys/[KEY_NAME]"
   type        = string
 }
