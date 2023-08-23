@@ -12,6 +12,7 @@ module "project-services" {
   disable_services_on_destroy = false
 }
 
+
 resource "google_compute_network" "network" {
   name                    = var.name
   auto_create_subnetworks = false

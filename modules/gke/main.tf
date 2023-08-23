@@ -15,6 +15,11 @@ module "project-services" {
   disable_services_on_destroy = false
 }
 
+data "google_project" "project" {
+  project_id = var.project_id
+  depends_on = [module.project-services]
+}
+
 # We create the service account and provide general iam roles
 
 resource "google_service_account" "cluster" {
@@ -24,28 +29,28 @@ resource "google_service_account" "cluster" {
 }
 
 resource "google_project_iam_member" "cluster_log_writer" {
-  project    = var.project
+  project    = var.project_id
   role       = "roles/logging.logWriter"
   member     = "serviceAccount:${google_service_account.cluster.email}"
   depends_on = [module.project-services]
 }
 
 resource "google_project_iam_member" "cluster_metric_writer" {
-  project    = var.project
+  project    = var.project_id
   role       = "roles/monitoring.metricWriter"
   member     = "serviceAccount:${google_service_account.cluster.email}"
   depends_on = [module.project-services]
 }
 
 resource "google_project_iam_member" "cluster_monitoring_viewer" {
-  project    = var.project
+  project    = var.project_id
   role       = "roles/monitoring.viewer"
   member     = "serviceAccount:${google_service_account.cluster.email}"
   depends_on = [module.project-services]
 }
 
 resource "google_project_iam_member" "cluster_metadata_writer" {
-  project    = var.project
+  project    = var.project_id
   role       = "roles/stackdriver.resourceMetadata.writer"
   member     = "serviceAccount:${google_service_account.cluster.email}"
   depends_on = [module.project-services]
