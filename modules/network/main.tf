@@ -16,6 +16,7 @@ module "project-services" {
 resource "google_compute_network" "network" {
   name                    = var.name
   auto_create_subnetworks = false
+  project = var.project_id
 }
 
 locals {
@@ -31,6 +32,7 @@ resource "google_compute_subnetwork" "subnetworks" {
   name     = each.key
   network  = google_compute_network.network.id
   region   = each.value.region
+  project = var.project_id
 
   private_ip_google_access   = true
   private_ipv6_google_access = "ENABLE_OUTBOUND_VM_ACCESS_TO_GOOGLE"
@@ -46,6 +48,7 @@ resource "google_compute_router" "router" {
   name     = "${var.name}-${each.value}"
   network  = google_compute_network.network.id
   region   = each.value
+  project = var.project_id
 }
 
 resource "google_compute_router_nat" "router_nat" {
@@ -53,6 +56,7 @@ resource "google_compute_router_nat" "router_nat" {
   name     = "${var.name}-${each.value}"
   router   = google_compute_router.router[each.key].name
   region   = each.value
+  project = var.project_id
 
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"

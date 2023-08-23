@@ -25,6 +25,7 @@ data "google_project" "project" {
 resource "google_service_account" "cluster" {
   account_id   = var.name
   display_name = "Service Account used by GKE cluster: '${var.name}'."
+  project = var.project_id
   depends_on   = [module.project-services]
 }
 
