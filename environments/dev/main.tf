@@ -33,7 +33,6 @@ module "cluster" {
   region                 = var.region
   network_id             = module.network.id
   subnetwork_id          = module.network.subnetworks["network-dev-main-${var.region}"].id
-  master_ipv4_cidr_block = "172.16.0.0/28"
 
   cluster_secondary_range_name  = local.cluster_secondary_range_name
   services_secondary_range_name = local.services_secondary_range_name
